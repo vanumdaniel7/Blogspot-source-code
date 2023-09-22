@@ -1,5 +1,5 @@
 import { GridItem, Center, Image } from "@chakra-ui/react";
-import LogoImage from "../../assets/LogoImage.png";
+import LogoImage from "../../assets/LogoImageLightTheme.png";
 
 const Logo = () => {
     return (
