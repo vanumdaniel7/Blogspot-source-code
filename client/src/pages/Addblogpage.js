@@ -1,7 +1,7 @@
 import { Flex, FormControl, FormLabel, Input, Button, Box, Textarea, FormErrorMessage, useToast, Spinner } from "@chakra-ui/react";
 import { useState, useReducer } from "react";
 import { useHistory } from "react-router-dom";
-import Navbar from "../components/Navbar";
+import Navbar from "../components/navbar/Navbar";
 import Maincontent from "../components/Maincontent";
 
 const reducerActions = {
@@ -50,7 +50,7 @@ const formReducer = (currState, action) => {
     }
 }
 
-const Addblogpage = () => {
+const AddblogPage = () => {
     const initialState = {
         title: "",
         content: "",
@@ -151,4 +151,4 @@ const Addblogpage = () => {
     )
 }
 
-export default Addblogpage;
+export default AddblogPage;

@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import VerificationSuccess from "../components/VerificationSuccess";
 
-const Verifyaccountpage = () => {
+const VerifyaccountPage = () => {
     const [description, setDescription] = useState({ 
         title: null, 
         info: null 
@@ -30,4 +30,4 @@ const Verifyaccountpage = () => {
     )
 }
 
-export default Verifyaccountpage;
+export default VerifyaccountPage;

@@ -1,5 +1,5 @@
 import { useState, useRef } from 'react';
-import { Box, FormControl, FormLabel, Spinner, useToast } from '@chakra-ui/react';
+import { Box, FormControl, FormLabel, ModalFooter, Spinner, useToast } from '@chakra-ui/react';
 import { Text, Center, Input } from '@chakra-ui/react';
 import { Modal, Button, ModalOverlay, ModalContent, ModalHeader, ModalBody, ModalCloseButton, useDisclosure, FormErrorMessage } from '@chakra-ui/react'
 import { useSelector } from 'react-redux';
@@ -9,32 +9,43 @@ const Changedetails = () => {
     const toast = useToast();
     const nameRef = useRef();
     const passwordRef = useRef();
+    const [profilePicture, setProfilePicture] = useState(null);
     const [isLoading, setIsLoading] = useState(false);
     const [isValidName, setIsValidName] = useState(true);
     const [isValidPassword, setIsValidPassword] = useState(true);
     const { isOpen, onOpen, onClose } = useDisclosure();
     const nameChangeHandler = event => {
-        console.log(event.target.value);
         setIsValidName(event.target.value.length === 0 || event.target.value.length > 5);
     }
     const passwordChangeHandler = event => {
         setIsValidPassword(event.target.value.length === 0 || event.target.value.length > 5);
     }
+    const profilePictureChangeHandler = event => {
+        setProfilePicture(event.target.files[0]);
+    }
     const isValidForm = isValidName && isValidPassword;
     const changeDetailsHandler = async event => {
+        
         setIsLoading(true);
         event.preventDefault();
         const token = localStorage.getItem("token");
+        
+        const formData = new FormData();
+        formData.append("name", nameRef.current.value);
+        formData.append("password", passwordRef.current.value);
+        formData.append("profilePicture", profilePicture);
+        
         try {
-            const result = await fetch(`http://localhost:3000/auth/?name=${nameRef.current.value}&&password=${passwordRef.current.value}`, {
+            const result = await fetch(`http://localhost:3000/auth`, {
                 mode: "cors",
                 method: "PATCH",
                 headers: {
-                    "Content-Type": "application/json",
                     "Authorization": token
-                }
+                },
+                body: formData
             });
             const res = await result.json();
+            console.log(res);
             toast({
                 position: "top",
                 title: res.title,
@@ -60,12 +71,12 @@ const Changedetails = () => {
         <Button variant="outline" onClick={onOpen} leftIcon={<svg width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M11.8536 1.14645C11.6583 0.951184 11.3417 0.951184 11.1465 1.14645L3.71455 8.57836C3.62459 8.66832 3.55263 8.77461 3.50251 8.89155L2.04044 12.303C1.9599 12.491 2.00189 12.709 2.14646 12.8536C2.29103 12.9981 2.50905 13.0401 2.69697 12.9596L6.10847 11.4975C6.2254 11.4474 6.3317 11.3754 6.42166 11.2855L13.8536 3.85355C14.0488 3.65829 14.0488 3.34171 13.8536 3.14645L11.8536 1.14645ZM4.42166 9.28547L11.5 2.20711L12.7929 3.5L5.71455 10.5784L4.21924 11.2192L3.78081 10.7808L4.42166 9.28547Z" fill="currentColor" fillRule="evenodd" clipRule="evenodd"></path></svg>}colorScheme='teal'>Edit</Button>
         <Modal isOpen={isOpen} onClose={onClose}>
           <ModalOverlay />
-          <ModalContent height="450px" width="95%">
+          <ModalContent width="95%">
             <ModalHeader>Change Details</ModalHeader>
             <ModalCloseButton/>
-            <ModalBody>
+            <form onSubmit={changeDetailsHandler}>
+                <ModalBody>
                 <Text>Leave the fields you dont want to change</Text>
-                <form onSubmit={changeDetailsHandler}>
                     <FormControl mt={4} isInvalid={!isValidName}>
                         <FormLabel>New username</FormLabel>
                         <Input ref={nameRef} onChange={nameChangeHandler} variant="outline" focusBorderColor={!isValidName ? "red.300" : "teal.400"} placeholder="enter username..." type="text"/>
@@ -76,11 +87,17 @@ const Changedetails = () => {
                         <Input ref={passwordRef} onChange={passwordChangeHandler} variant="outline" focusBorderColor={!isValidPassword ? "red.300" : "teal.400"} placeholder="enter password..." type="text"/>
                         {!isValidPassword && <FormErrorMessage>Password should be atleast 6 characters long</FormErrorMessage>}
                     </FormControl>
+                    <FormControl mt={4}>
+                        <FormLabel>New Profile Photo</FormLabel>
+                        <Input padding = "0px" border = "none" borderRadius = "0px" onChange={profilePictureChangeHandler} encType="multipart/form-data" variant="outline" type = "file"></Input>
+                    </FormControl>
+                </ModalBody>
+                <ModalFooter>
                     <FormControl mt={6}>
                         <Button disabled={!isValidForm} variant="solid" width="100%" type="submit" colorScheme="teal">{isLoading === true ? <Spinner/> : "Save Changes"}</Button>
                     </FormControl>
-                </form>
-            </ModalBody>
+                </ModalFooter>
+            </form>
           </ModalContent>
         </Modal>
       </>

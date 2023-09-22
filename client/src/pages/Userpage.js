@@ -1,18 +1,18 @@
 import Maincontent from "../components/Maincontent";
-import Navbar from "../components/Navbar";
+import Navbar from "../components/navbar/Navbar";
 import Profile from "../components/Profile";
 import Userpageloader from "../components/Userpageloader";
 import Userblogs from "../components/Userblogs";
 import { useState, useEffect } from "react";
 import { useParams, useHistory } from "react-router-dom";
-import { userActions } from "../store";
+import { userProfileActions } from "../store";
 import { useSelector, useDispatch } from "react-redux";
 import { useToast } from "@chakra-ui/react";
 import Pageloader from "../components/Pageloader";
 
 let isInitial = true;
 
-const Userpage = () => {
+const UserPage = () => {
     const loadcnt = useSelector(state => state.user.loadcnt);
     const toast = useToast();
     const history = useHistory();
@@ -41,7 +41,7 @@ const Userpage = () => {
             });
             const res = await result.json();
             if(res.status === "success") {
-                dispatch(userActions.getDetails(res.details));
+                dispatch(userProfileActions.getDetails(res.details));
             } else {
                 toast({
                     position: "top",
@@ -67,7 +67,7 @@ const Userpage = () => {
                 history.push("/home");
                 return;
             }
-            dispatch(userActions.getSpinner());
+            dispatch(userProfileActions.getSpinner());
             const result = await fetch(`http://localhost:3000/users/${parseInt(id)}/blogs/${loadcnt}`, {
                 method: "GET",
                 mode: "cors",
@@ -78,7 +78,7 @@ const Userpage = () => {
             });
             const res = await result.json();
             if(res.status === "success") {
-                dispatch(userActions.getBlogs(res.data));
+                dispatch(userProfileActions.getBlogs(res.data));
             } else {
                 toast({
                     position: "top",
@@ -89,7 +89,7 @@ const Userpage = () => {
                     isClosable: true,
                 });
             }
-            dispatch(userActions.removeSpinner());
+            dispatch(userProfileActions.removeSpinner());
         }
         fetchUserBlogs();
     }, [id, dispatch, toast, history, loadcnt, token]);
@@ -106,4 +106,4 @@ const Userpage = () => {
     )
 }
 
-export default Userpage;
+export default UserPage;

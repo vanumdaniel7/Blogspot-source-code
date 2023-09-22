@@ -3,7 +3,7 @@ import { useRef, useState } from "react"
 import { useParams } from "react-router-dom";
 import Navbarauthpage from "../components/Navbarauthpage"
 
-const Forgotpasswordpage = () => {
+const ForgotpasswordPage = () => {
     const toast = useToast();
     const passwordRef = useRef();
     const [isLoading, setIsLoading] = useState(false);
@@ -63,4 +63,4 @@ const Forgotpasswordpage = () => {
     )
 }
 
-export default Forgotpasswordpage;
+export default ForgotpasswordPage;

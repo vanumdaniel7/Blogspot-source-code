@@ -1,43 +1,37 @@
 import { createSlice, configureStore } from "@reduxjs/toolkit";
 
-const inititalAlertState = {
-    title: null,
-    status: null,
-    description: null
-}
+const initialAuthState = {
+    count: 0,
+    name: localStorage.getItem("name"),
+    email: localStorage.getItem("email"),
+    password: localStorage.getItem("password"),
+    isLoggedIn: !!localStorage.getItem("token"),
+    joinedDate: localStorage.getItem("joinedDate"),
+    profilePictureURL: localStorage.getItem("profilePictureURL")
+};
 
-const alertSlice = createSlice({
-    name: "alert",
-    initialState: inititalAlertState,
+const authSlice = createSlice({
+    name: "auth",
+    initialState: initialAuthState,
     reducers: {
-        showAlert(state, action) {
-            state.title = action.payload.title;
-            state.status = action.payload.status;
-            state.description = action.payload.description;
-        },
-        hideAlert(state) {
-            state.title = null;
-            state.status = null;
-            state.description = null;
-        }
+        
     }
 });
 
-const initialuserResultState = {
-    users: [
+const initialNavbarState = {
+    usersFoundWhileSearching: [
         
     ],
     isTyping: false,
-    isInputEmpty: true,
     inputName: ""
 };
 
-const userResultSlice = createSlice({
-    name: "userResult",
-    initialState: initialuserResultState,
+const navbarSlice = createSlice({
+    name: "navbar",
+    initialState: initialNavbarState,
     reducers: {
         replace(state, action) {
-            state.users = action.payload;
+            state.usersFoundWhileSearching = action.payload;
         },
         typing(state) {
             state.isTyping = true;
@@ -49,11 +43,8 @@ const userResultSlice = createSlice({
             state.inputName = action.payload;
         },
         makeInputEmpty(state) {
-            state.isInputEmpty = true;
-            state.users = [];
-        },
-        makeInputNonEmpty(state) {
-            state.isInputEmpty = false;
+            state.inputName = "";
+            state.usersFoundWhileSearching = [];
         }
     }
 });
@@ -106,7 +97,7 @@ const blogSlice = createSlice({
     }
 });
 
-const initialUserState = {
+const initialUserProfileState = {
     loadcnt: -1,
     isLoading: 0,
     details: {
@@ -115,15 +106,14 @@ const initialUserState = {
         joinedDate: null,
         count: null,
     },
-    isLoggedIn: !!localStorage.getItem("token"),
     blogs: [
 
     ]
 }
 
-const userSlice = createSlice({
-    name: "user",
-    initialState: initialUserState,
+const userProfileSlice = createSlice({
+    name: "userProfile",
+    initialState: initialUserProfileState,
     reducers: {
         getBlogs(state, action) {
             state.blogs = [...state.blogs, ...action.payload];
@@ -154,17 +144,17 @@ const userSlice = createSlice({
 
 const store = configureStore({
     reducer: {
-        alert: alertSlice.reducer,
-        userResult: userResultSlice.reducer,
-        sidebar: sidebarSlice.reducer,
+        auth: authSlice.reducer,
         blogs: blogSlice.reducer,
-        user: userSlice.reducer
+        navbar: navbarSlice.reducer,
+        sidebar: sidebarSlice.reducer,
+        user: userProfileSlice.reducer
     }
 });
 
 export default store;
-export const alertActions = alertSlice.actions;
-export const userResultActions = userResultSlice.actions;
-export const sidebarActions = sidebarSlice.actions;
+export const authActions = authSlice.actions;
 export const blogsActions = blogSlice.actions;
-export const userActions = userSlice.actions;
+export const navbarActions = navbarSlice.actions;
+export const sidebarActions = sidebarSlice.actions;
+export const userProfileActions = userProfileSlice.actions;

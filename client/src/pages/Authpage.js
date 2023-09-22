@@ -4,17 +4,17 @@ import Navbarauthpage from "../components/Navbarauthpage.js";
 import Signinform from '../components/signinform.js';
 import Signupform from '../components/signupform.js';
 
-const Authpage = () => {
+const AuthPage = () => {
     return (
         <>
             <Navbarauthpage/>
-            <Flex justifyContent="center" alignItems="center" width="100%" height="150px">    
+            <Flex justifyContent = "center" alignItems = "center" width = "100%" height = "150px">    
                 <Box width="350px">
-                    <Text textAlign="center" fontWeight={["bold","bold","bold"]} fontSize={["40px","40px","40px"]} color="#39424e" position="relative" top="-20px">Heading</Text>
-                    <Text textAlign="center">bla blefwegre blaweglieargb lawerbgfay learghbl</Text>
+                    <Text textAlign = "center" fontWeight = {["bold","bold","bold"]} fontSize = {["40px","40px","40px"]} color = "#39424e" position = "relative" top = "-20px">Heading</Text>
+                    <Text textAlign = "center">Share your views to the world</Text>
                 </Box>
             </Flex>
-            <Flex justifyContent="center" width="100%" height="470px">
+            <Flex justifyContent = "center" width="100%" height="470px">
                 <Box w="95%" maxW="400px" height="450px" borderColor="grey.200" shadow="md" borderWidth="2px" borderRadius="lg">
                 <Tabs colorScheme="teal">
                     <TabList pt={2} pl={2}>
@@ -40,4 +40,4 @@ const Authpage = () => {
     )
 }
 
-export default Authpage;
+export default AuthPage;

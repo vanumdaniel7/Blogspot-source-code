@@ -2,7 +2,7 @@ import { Button, Input, Box, FormControl, FormLabel, useToast, Spinner } from '@
 import { useState, useRef } from "react";
 import { useHistory } from 'react-router-dom';
 import { useDispatch } from "react-redux";
-import { userActions } from '../store';
+import { authActions, userActions } from '../store';
 
 const Signinform = () => {
     const dispatch = useDispatch();
@@ -37,7 +37,7 @@ const Signinform = () => {
             }
             if(res.status === "success") {
                 history.push("/home");
-                dispatch(userActions.loginHandler());
+                dispatch(authActions.loginHandler());
             }
             toast({
                 position: "top",

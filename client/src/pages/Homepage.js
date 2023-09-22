@@ -1,4 +1,4 @@
-import Navbar from "../components/Navbar.js";
+import Navbar from "../components/navbar/Navbar";
 import Blogs from "../components/Blogs.js";
 import Maincontent from "../components/Maincontent.js";
 import Homepageloader from "../components/Homepageloader.js";
@@ -9,7 +9,7 @@ import { useSelector, useDispatch } from "react-redux";
 
 let isInitial = true;
 
-const Homepage = () => {
+const HomePage = () => {
     const toast = useToast();
     const loadcnt = useSelector(state => state.blogs.loadcnt);
     const dispatch = useDispatch();
@@ -57,4 +57,4 @@ const Homepage = () => {
     )
 }
 
-export default Homepage;
+export default HomePage;

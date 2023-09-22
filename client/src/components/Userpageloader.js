@@ -1,7 +1,7 @@
 import { Flex, Spinner } from "@chakra-ui/react"
 import { useEffect } from "react";
 import { useInView } from "react-intersection-observer";
-import { userActions } from "../store";
+import { userProfileActions } from "../store";
 import { useSelector,useDispatch } from "react-redux";
 let isInitial = true
 
@@ -16,7 +16,7 @@ const Userpageloader = props => {
             isInitial = false;
             return;
         } 
-        dispatch(userActions.increaseLoadCnt());
+        dispatch(userProfileActions.increaseLoadCnt());
     }, [inView, dispatch])
     return (
         <Flex ref={ref} justifyContent = "center" alignItems = "center" height="80px">
