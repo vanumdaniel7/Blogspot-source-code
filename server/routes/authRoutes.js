@@ -1,9 +1,12 @@
+const path = require("path");
 const express = require("express");
 const jwt = require("jsonwebtoken");
 const db = require("../db/postgresql.js");
 const auth = require("../utilities/auth.js");
 const mailer = require("../utilities/mailer.js");
-const path = require("path");
+const cloudinary = require("../utilities/cloudinary.js");
+const cloudinaryBuildURL = require("cloudinary-build-url");
+const upload = require("../middlewares/multer.js");
 require('dotenv').config({ path: path.join(__dirname, "..", ".env") });
 const router = express.Router();
 
@@ -99,15 +102,28 @@ router.get("/verify/:token", async (req, res) => {
     }
 });
 
-router.patch("/", requireAuthentication, async (req, res) => {
+router.patch("/", upload.single("profilePicture"), requireAuthentication, async (req, res) => {
     try {
         const id = res.locals.id;
-        const { name, password } = req.query;
+        const { name, password } = req.body;
+        const { details: userDetails } = await db.getUserDetails(id);
+        let profilePictureURL = userDetails.profilePictureURL;
+        if(req.file) {
+            if(userDetails.profilePictureURL !== process.env.DEFAULT_USER_PROFILEPICTUREURL) {
+                const olderImagePublicId = cloudinaryBuildURL.extractPublicId(userDetails.profilePictureURL);
+                const cloudinaryDeleteResponse = await cloudinary.uploader.destroy(olderImagePublicId);
+            }
+            const cloudinaryResponse = await cloudinary.uploader.upload(req.file.path, {
+                folder: "uploads",
+            });
+            profilePictureURL = cloudinaryResponse.secure_url;
+        }
         const actualName = name.trim();
         const actualPassword = password.trim();
-        const result = await db.updateUserDetails(id, actualName, actualPassword);
+        const result = await db.updateUserDetails(id, actualName, actualPassword, profilePictureURL);
         res.json(result);
     } catch(err) {
+        console.log(err);
         res.json({ 
             err:"An unexpected error occured, please try again later", 
             info: "error", 

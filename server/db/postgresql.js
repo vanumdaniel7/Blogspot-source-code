@@ -30,30 +30,30 @@ module.exports = {
     },
     createusertable: async () => {
         const query = `
-                    CREATE TABLE users (
-                        id bigserial primary key,
-                        email varchar(64) not null unique,
-                        name varchar(64) not null,
-                        password varchar(64) not null,
-                        isverified boolean not null,
-                        dateJoined varchar(64) not null
-                    );
-                    `;
+            CREATE TABLE users (
+                id bigserial primary key,
+                email varchar(64) not null unique,
+                name varchar(64) not null,
+                password varchar(64) not null,
+                isverified boolean not null,
+                dateJoined varchar(64) not null
+            );
+        `;
         return await client.query(query);
     },
-    getUserDetails: async id => {
-        const query = `SELECT * FROM users WHERE id = ${id}`;
-        const tempResults = await client.query(query);
-        let result = [];
-        for(let tempResult of tempResults.rows) {
-            let modifiedTempResult = tempResult;
-            const tempDate = new Date(parseInt(tempResult.dateJoined));
-            const modifiedTempDate = tempDate.toLocaleDateString("en-AU");
-            modifiedTempResult.dateJoined = tempDate;
-            result.push(modifiedTempResult);
-        }
-        return result;
-    },
+    // getUserDetails: async id => {
+    //     const query = `SELECT * FROM users WHERE id = ${id}`;
+    //     const tempResults = await client.query(query);
+    //     let result = [];
+    //     for(let tempResult of tempResults.rows) {
+    //         let modifiedTempResult = tempResult;
+    //         const tempDate = new Date(parseInt(tempResult.dateJoined));
+    //         const modifiedTempDate = tempDate.toLocaleDateString("en-AU");
+    //         modifiedTempResult.dateJoined = tempDate;
+    //         result.push(modifiedTempResult);
+    //     }
+    //     return result;
+    // },
     getUserDetailsFromEmail: async email => {
         const query = `SELECT * FROM users WHERE email = '${email}'`;
         const result = await client.query(query);
@@ -88,20 +88,20 @@ module.exports = {
         const mainResult = { data: result, info: "Fetch Successful", status: "success", title: "Success" };
         return mainResult;
     },
-    updateUserDetails: async (id, name, password) => {
-        let query, hashedPassword;
-        if(password) {
-            hashedPassword = await bcrypt.hash(password, 12);
-        }
-        if(name && password) {
-            query = `UPDATE users SET name = '${name}', password = '${hashedPassword}' WHERE id = ${id}`;
-        } else if(name && !password) {
-            query = `UPDATE users SET name = '${name}' WHERE id = ${id}`;
-        } else if(!name && password) {
-            query = `UPDATE users SET password = '${hashedPassword}' WHERE id = ${id}`;
-        }
-        const result = client.query(query);
-        return { info: "User details successfully updated", status: "success", title: "Success" };
+    updateUserDetails: async (id, name, password, profilePictureURL) => {
+        const hashedPassword = await bcrypt.hash(password, 12);
+        const query = `UPDATE users SET name = '${name}', password = '${hashedPassword}', profilePictureURL = '${profilePictureURL}' WHERE id = ${id}`;
+        const result = await client.query(query);
+        return { 
+            info: "User details successfully updated", 
+            status: "success", 
+            title: "Success", 
+            data: {
+                name: name,
+                password: password,
+                profilePictureURL: profilePictureURL
+            }
+        };
     },
     createblogstable: async () => {
         const query =   `
@@ -128,7 +128,7 @@ module.exports = {
         }
     },
     getUserDetails: async id => {
-        const query1 = `SELECT email, name, dateJoined FROM users WHERE id = ${id};`;
+        const query1 = `SELECT email, name, dateJoined, profilePictureURL FROM users WHERE id = ${id};`;
         const query2 = `SELECT COUNT(*) FROM blogs WHERE userId = ${id}`;
         const result1 = await client.query(query1);
         const result2 = await client.query(query2);
@@ -138,7 +138,8 @@ module.exports = {
             name: result1.rows[0].name,
             email: result1.rows[0].email,
             dateJoined: date.toLocaleDateString("en-AU"),
-            count: result2.rows[0].count
+            count: result2.rows[0].count,
+            profilePictureURL: result1.rows[0].profilepictureurl
         };
         return { details: details, info: "Fetch Successful", status: "success", title: "Success" }
     },
