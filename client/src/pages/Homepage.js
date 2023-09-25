@@ -1,11 +1,9 @@
-import Navbar from "../components/navbar/Navbar";
-import Blogs from "../components/Blogs.js";
-import Maincontent from "../components/Maincontent.js";
-import Homepageloader from "../components/Homepageloader.js";
-import { useToast } from "@chakra-ui/react";
-import { blogsActions } from "../store/index.js";
-import { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
+import Sidebar from "../components/sidebar/Sidebar";
+import { blogsActions } from "../store/index.js";
+import { useToast } from "@chakra-ui/react";
+import { Box } from "@chakra-ui/react";
+import { useEffect } from "react";
 
 let isInitial = true;
 
@@ -47,13 +45,9 @@ const HomePage = () => {
         fetchBlogs();
     }, [loadcnt, dispatch, toast]);
     return (
-        <>
-            <Navbar/>
-            <Maincontent>
-                <Blogs/>
-                <Homepageloader/>
-            </Maincontent>
-        </>
+        <Box width = "100vw" height = "100vh" backgroundColor = "#f0f7f4">
+            <Sidebar/>
+        </Box>
     )
 }
 

@@ -18,7 +18,7 @@ const App = () => {
             <Route path = "/auth/verify/:token" exact><VerifyaccountPage/></Route>
             {isLoggedIn && <Route path = "/auth/profile" exact><ProfilePage/></Route>}
             {isLoggedIn && <Route path = "/home" exact><HomePage/></Route>}
-            {isLoggedIn && <Route path = "/blogs/new" exact><AddblogPage/></Route>}
+            {isLoggedIn && <Route path = "/new" exact><AddblogPage/></Route>}
             {isLoggedIn && <Route path = "/users/:id" exact><UserPage/></Route>}
             {isLoggedIn && <Route path = "*" exact><NotfoundPage/></Route>}
             {!isLoggedIn && <Route path = "*"><Redirect to = "/"/></Route>}

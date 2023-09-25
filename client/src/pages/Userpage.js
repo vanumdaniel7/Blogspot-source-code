@@ -1,5 +1,4 @@
 import Maincontent from "../components/Maincontent";
-import Navbar from "../components/navbar/Navbar";
 import Profile from "../components/Profile";
 import Userpageloader from "../components/Userpageloader";
 import Userblogs from "../components/Userblogs";
@@ -95,7 +94,6 @@ const UserPage = () => {
     }, [id, dispatch, toast, history, loadcnt, token]);
     return (
         <>
-            <Navbar/>
             {isLoading && <Pageloader/>}
             <Maincontent>
                 {!isLoading && <Profile/>}

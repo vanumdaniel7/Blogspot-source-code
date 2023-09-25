@@ -1,8 +1,8 @@
 import { Flex, FormControl, FormLabel, Input, Button, Box, Textarea, FormErrorMessage, useToast, Spinner } from "@chakra-ui/react";
 import { useState, useReducer } from "react";
 import { useHistory } from "react-router-dom";
-import Navbar from "../components/navbar/Navbar";
 import Maincontent from "../components/Maincontent";
+import Sidebar from "../components/sidebar/Sidebar";
 
 const reducerActions = {
     CHANGE_TITLE: "CHANGE_TITLE",
@@ -113,8 +113,8 @@ const AddblogPage = () => {
     const tag2IsValid = currState.tag2.length < 15;
     return (
         <>
-            <Navbar/>
             <Maincontent>
+                <Sidebar/>
                 <Flex width = "100%" height="calc(100vh - 60px)" justifyContent = "center" alignItems = "center">
                     <Box w="90%" maxW="500px" borderColor="grey.200" shadow="md" borderWidth="2px" borderRadius="lg">
                         <form onSubmit = {addBlogHandler}>
