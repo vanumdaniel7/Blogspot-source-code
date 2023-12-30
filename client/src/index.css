@@ -1,0 +1,100 @@
+.tox .tox-statusbar__branding svg {
+    display: none;
+}
+
+.tox .tox-toolbar-overlord {
+    background-color: #12181F !important;
+}
+.tox-editor-header, .tox-toolbar--scrolling {
+    background-color: #12181F !important;
+}
+
+.tox-toolbar__primary {
+    background-color: #12181F !important;
+}
+
+.tox-toolbar__overflow {
+    background-color: #12181F !important;
+}
+
+.tox .tox-tbtn--enabled, .tox .tox-tbtn:hover {
+    background-color: #0C2A2A !important;
+    border-radius: 4px !important;
+}
+
+.tox-tbtn {
+    padding: 4px;
+}
+
+.tox-tbtn:hover, .tox-tbtn:focus, .tox-tbtn:active{
+    background-color: transparent !important;
+}
+
+.tox .tox-split-button:hover {
+    box-shadow: none !important;
+}
+
+.tox .tox-tbtn svg {
+    fill: #32E6E2 !important;
+}
+
+.tox-editor-header {
+    border-bottom: 1px solid #7e8792 !important;
+}
+
+.tox-tinymce {
+    border: 1px solid #7e8792 !important;
+    box-shadow: 0 1px 0.625rem 0 #12181F99, 0 0.125rem 0.25rem 0 #12181F66 !important;
+}
+
+.tox .tox-statusbar {
+    background-color: #12181F !important;
+    border-top: 1px solid #7e8792 !important;
+}
+
+.tox-statusbar__resize-handle svg {
+    fill: #32E6E2 !important;
+}
+
+.tox-statusbar__path-item {
+    color: white !important;
+}
+
+.tox-tbtn__select-label {
+    color: #32E6E2 !important;
+}
+
+.tinymce-blockquote {
+    border-radius: 3px !important;
+    border-left: 3px solid #32E6E2 !important;
+    margin-left: 1.5rem !important;
+    padding-left: 1rem !important;
+}
+
+.tinymce-p {
+    color: white;
+}
+
+.tinymce-h1 {
+    color: #32E6E2;
+    display: block !important;
+    font-size: 2em !important;
+    margin-inline-start: 0px !important;
+    margin-inline-end: 0px !important;
+    font-weight: bold !important;
+}
+
+.tinymce-h2 {
+    color: #32E6E2;
+    display: block !important;
+    font-size: 1.5em !important;
+    margin-block-start: 0.83em !important;
+    margin-block-end: 0.83em !important;
+    margin-inline-start: 0px !important;
+    margin-inline-end: 0px !important;
+    font-weight: bold !important;
+}
+
+input {
+    color-scheme: dark;
+}
